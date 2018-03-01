@@ -170,6 +170,7 @@ public class BoardPanel extends JPanel {
             }
         }
     }
+
     /**
     * This method paint the pixels of the square selected in the board
     * and in case of invalid or repeated numbers in the same subgrid, column, or row then
