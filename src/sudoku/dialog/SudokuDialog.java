@@ -36,12 +36,12 @@ public class SudokuDialog extends JFrame {
     private JLabel msgBar = new JLabel("");
 
     /** Create a new dialog. */
-    public SudokuDialog() {
+    private SudokuDialog() {
     	this(DEFAULT_SIZE);
     }
     
     /** Create a new dialog of the given screen dimension. */
-    public SudokuDialog(Dimension dim) {
+    private SudokuDialog(Dimension dim) {
         super("Sudoku");
         System.out.println("Sudouku DIalog Dimension");
         setSize(dim);
@@ -102,7 +102,6 @@ public class SudokuDialog extends JFrame {
         if (newGame == JOptionPane.YES_NO_OPTION) {
             System.out.println("new Clicked");
             board = new Board(size);
-
             boardPanel.setBoard(board);
             boardPanel.repaint();
             showMessage("New Game Board: " + size);
@@ -122,18 +121,15 @@ public class SudokuDialog extends JFrame {
         System.out.println("configureUI");
         setIconImage(createImageIcon("sudoku.png").getImage());
         setLayout(new BorderLayout());
-        
         JPanel buttons = makeControlPanel();
         // boarder: top, left, bottom, right
         buttons.setBorder(BorderFactory.createEmptyBorder(10,16,0,16));
         add(buttons, BorderLayout.NORTH);
-        
         JPanel board = new JPanel();
         board.setBorder(BorderFactory.createEmptyBorder(10,16,0,16));
         board.setLayout(new GridLayout(1,1));
         board.add(boardPanel);
         add(board, BorderLayout.CENTER);
-        
         msgBar.setBorder(BorderFactory.createEmptyBorder(10,16,10,0));
         add(msgBar, BorderLayout.SOUTH);
     }
@@ -151,7 +147,6 @@ public class SudokuDialog extends JFrame {
             newButtons.add(button);
     	}
     	newButtons.setAlignmentX(LEFT_ALIGNMENT);
-        
     	// buttons labeled 1, 2, ..., 9, and X.
     	JPanel numberButtons = new JPanel(new FlowLayout());
     	int maxNumber = board.size() + 1;
@@ -164,7 +159,6 @@ public class SudokuDialog extends JFrame {
     		numberButtons.add(button);
     	}
     	numberButtons.setAlignmentX(LEFT_ALIGNMENT);
-
     	JPanel content = new JPanel();
     	content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
         content.add(newButtons);
