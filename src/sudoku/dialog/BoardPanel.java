@@ -111,12 +111,16 @@ public class BoardPanel extends JPanel {
 
         // WRITE YOUR CODE HERE ...
         actions(g);
-        drawBoard(g);
+        drawNumbers(g);
         insideLines(g);
         outsideBox(g);
     }
 
-    /*This method is used for drawing the box border and the grid of the board size*/
+
+    /**
+     * This method draw the outside lines to define the subgrid of the board
+     * @param g method receives the Graphics class in order to draw the lines
+     * */
     private void outsideBox(Graphics g) {
         System.out.println("outsideBox");
         g.setColor(Color.BLACK);
@@ -132,7 +136,10 @@ public class BoardPanel extends JPanel {
             }
         }
     }
-
+    /**
+     * This method draw the inside lines to define the total rows and columns of the board
+     * @param g method receives the Graphics class in order to draw the lines
+     * */
     private void insideLines(Graphics g) {
         System.out.println("insideLines");
         g.setColor(Color.gray);
@@ -142,8 +149,11 @@ public class BoardPanel extends JPanel {
 
         }
     }
-
-    private void drawBoard(Graphics g) {
+    /**
+     * This method draw the numbers stored in the matrix in their corresponding index
+     * @param g method receives the Graphics class in order to draw the numbers
+     * */
+    private void drawNumbers(Graphics g) {
         for (int i = 0; i < board.size(); i++) {
             for (int j = 0; j < board.size(); j++) {
                 if (board.getElement(i, j) != 0) {
@@ -153,8 +163,13 @@ public class BoardPanel extends JPanel {
             }
         }
     }
-
-    private void actions(Graphics g) {
+    /**
+    * This method paint the pixels of the square selected in the board
+    * and in case of invalid or repeated numbers in the same subgrid, column, or row then
+    * would display red square in all the positions
+    * @param g method receives the Graphics class in order to draw the actions
+    * */
+        private void actions(Graphics g) {
         System.out.println("actions");
         if (highlightSqr) {
             g.setColor(Color.PINK);
