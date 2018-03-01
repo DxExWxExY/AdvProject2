@@ -11,6 +11,7 @@ public class Board {
         this.size = size;
 
         // WRITE YOUR CODE HERE ...
+
     }
 
     /** Return the size of this board. */

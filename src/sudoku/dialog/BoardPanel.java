@@ -32,7 +32,7 @@ public class BoardPanel extends JPanel {
 	}
 	
     /** Background color of the board. */
-	private static final Color boardColor = new Color(247, 223, 150);
+	private static final Color boardColor = new Color(150, 223, 150);
 
     /** Board to be displayed. */
     private Board board;
@@ -89,7 +89,8 @@ public class BoardPanel extends JPanel {
         g.fillRect(0, 0, squareSize * board.size, squareSize * board.size);
 
         // WRITE YOUR CODE HERE ...
-        // i.e., draw grid and squares.
+
+
     }
 
 }
