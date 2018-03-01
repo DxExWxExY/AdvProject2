@@ -1,6 +1,7 @@
 package sudoku.model;
 
-/** An abstraction of Sudoku puzzle. */
+/** An abstraction of the Sudoku puzzle.
+ * */
 public class Board {
 
     /** Size of this board (number of columns/rows). */
@@ -17,7 +18,15 @@ public class Board {
     public int size() {
     	return size;
     }
-
+    /**
+     * This method receives a coordinate in the matrix and checks if it is allowed.
+     * To check if the insertion is allowed, it relies on checkVertical, checkHorizontal,
+     * checkRange, and checkSubGrid.
+     * @param row This is the row at which the number would be inserted.
+     * @param col This is the column at which the number would be inserted.
+     * @param num This is the number to be inserted into the matrix.
+     * @return Returns whether the insertion was allowed or not.
+     * */
     public boolean insertElement(int row, int col, int num) {
         if (checkHorizontal(row, num) && checkVertical(col, num)
                 && checkSubGrid(row, col, num) && checkRange(num)) {
@@ -27,17 +36,30 @@ public class Board {
         return false;
     }
 
-    /*this sets the element at position i,j back to 0*/
+    /**
+     * This deletes the element at position row col by setting it back to 0.
+     * @param row This is the row at which the number would be inserted deleted.
+     * @param col This is the column at which the number would be deleted.
+     * */
     public void deleteElement(int row, int col) {
         board[row][col] = 0;
     }
 
-    /*this  method retrieves the element at position i,j*/
-    public int getElement(int i, int j) {
-        return board[i][j];
+    /**
+     * This  method retrieves the element at position row col.
+     * @param row This is the row in the matrix.
+     * @param col This is the column in the matrix.
+     * */
+    public int getElement(int row, int col) {
+        return board[row][col];
     }
 
-    /*this stores n into the position i,j*/
+    /**
+     * This stores num into the position row col.
+     * @param row This is the row at which the number is inserted.
+     * @param col This is the column at which the number is inserted.
+     * @param num This is the number inserted into the matrix.
+     * */
     private void setElement(int row, int col, int num) {
         board[row][col] = num;
     }
