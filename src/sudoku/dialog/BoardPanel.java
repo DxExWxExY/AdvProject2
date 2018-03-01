@@ -42,7 +42,7 @@ public class BoardPanel extends JPanel {
     /**
      * Background color of the board.
      */
-    private static  Color boardColor = new Color(rand.nextInt(240) + 1, rand.nextInt(240) + 1, rand.nextInt(250) + 1);
+    private static  Color boardColor = new Color(70, 70, 70);
 
     /**
      * Board to be displayed.
@@ -62,7 +62,7 @@ public class BoardPanel extends JPanel {
      * Create a new board panel to display the given board.
      */
     public BoardPanel(Board board, ClickListener listener) {
-        System.out.println("BoardPanel");
+//        System.out.println("BoardPanel");
         this.board = board;
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
@@ -78,7 +78,7 @@ public class BoardPanel extends JPanel {
      * Set the board to be displayed.
      */
     public void setBoard(Board board) {
-        System.out.println("setBOard");
+//        System.out.println("setBOard");
         this.board = board;
     }
 
@@ -89,7 +89,7 @@ public class BoardPanel extends JPanel {
      * where x and y are 0-based column/row indexes.
      */
     private int locateSquare(int x, int y) {
-        System.out.println("locateSquare");
+//        System.out.println("locateSquare");
         if (x < 0 || x > board.size() * squareSize
                 || y < 0 || y > board.size() * squareSize) {
             return -1;
@@ -104,7 +104,7 @@ public class BoardPanel extends JPanel {
      */
     @Override
     public void paint(Graphics g) {
-        System.out.println("paint");
+//        System.out.println("paint");
         super.paint(g);
 
         // determine the square size
@@ -129,7 +129,7 @@ public class BoardPanel extends JPanel {
      * @param g method receives the Graphics class in order to draw the lines
      * */
     private void outsideBox(Graphics g) {
-        System.out.println("outsideBox");
+//        System.out.println("outsideBox");
         g.setColor(Color.BLACK);
         g.drawLine(0, 0, squareSize * board.size(), 0);             //top line
         g.drawLine(0, 0, 0, squareSize * board.size());             //left line
@@ -148,7 +148,7 @@ public class BoardPanel extends JPanel {
      * @param g method receives the Graphics class in order to draw the lines
      * */
     private void insideLines(Graphics g) {
-        System.out.println("insideLines");
+//        System.out.println("insideLines");
         g.setColor(Color.gray);
         for (int i = 0; i < 276; i = i + squareSize) {
             g.drawLine(i, 0, i, squareSize * board.size());
@@ -164,7 +164,7 @@ public class BoardPanel extends JPanel {
         for (int i = 0; i < board.size(); i++) {
             for (int j = 0; j < board.size(); j++) {
                 if (board.getElement(i, j) != 0) {
-                    g.setColor(Color.BLACK);
+                    g.setColor(Color.white);
                     g.drawString(String.valueOf(board.getElement(i,j)), (i*squareSize)+(squareSize/2-3), (j*squareSize)+(squareSize/2+4));
                 }
             }
@@ -177,9 +177,9 @@ public class BoardPanel extends JPanel {
     * @param g method receives the Graphics class in order to draw the actions
     * */
         private void actions(Graphics g) {
-        System.out.println("actions");
+//        System.out.println("actions");
         if (highlightSqr) {
-            g.setColor(Color.PINK);
+            g.setColor(Color.cyan);
             g.fillRect(sx, sy, squareSize, squareSize);
             highlightSqr = false;
         }
