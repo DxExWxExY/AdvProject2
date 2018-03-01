@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.ImageObserver;
 import java.text.AttributedCharacterIterator;
+import java.util.Random;
 
 import javax.swing.JPanel;
 
@@ -33,9 +34,15 @@ public class BoardPanel extends JPanel {
     }
 
     /**
+
+     */
+    static Random rand = new Random();
+
+
+    /**
      * Background color of the board.
      */
-    private static final Color boardColor = new Color(247, 223, 150);
+    private static  Color boardColor = new Color(rand.nextInt(240) + 1, rand.nextInt(240) + 1, rand.nextInt(250) + 1);
 
     /**
      * Board to be displayed.
