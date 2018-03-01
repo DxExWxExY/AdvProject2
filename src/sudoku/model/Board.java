@@ -64,7 +64,12 @@ public class Board {
         board[row][col] = num;
     }
 
-    /*this performs the horizontal check*/
+    /**
+     * This performs the horizontal rule check of sudoku.
+     * @param row This is the row which will be checked.
+     * @param num This is the number to be compared to the rest of the row.
+     * @return Returns if the number follows the rule.
+     * */
     private boolean checkHorizontal(int row, int num) {
         if (num == 0) {
             return true;
@@ -77,7 +82,12 @@ public class Board {
         return true;
     }
 
-    /*this performs the vertical line check*/
+    /**
+     * This performs the vertical rule check of sudoku.
+     * @param col This is the column which will be checked.
+     * @param num This is the number to be compared to the rest of the column.
+     * @return Returns if the number follows the rule.
+     * */
     private boolean checkVertical(int col, int num) {
         if (num == 0) {
             return true;
@@ -90,7 +100,13 @@ public class Board {
         return true;
     }
 
-    /*this checks the sub grid*/
+    /**
+     * This performs the sub-grid rule check of sudoku.
+     * @param row This is the row which will be checked.
+     * @param col This is the column which will be checked.
+     * @param num This is the number to be compared to the rest of the sub-grid.
+     * @return Returns if the number follows the rule.
+     * */
     private boolean checkSubGrid(int row, int col, int num) {
         if (num == 0) { // if the element to replace is 0
             return true;
@@ -111,12 +127,19 @@ public class Board {
         return true;
     }
 
-    /*this tells if the input number is in range*/
+    /**
+     * This checks if the input number is in range
+     * @param num This is the number to be checked.
+     * @return Returns if the number follows the rule.
+     * */
     private boolean checkRange(int num) {
         return num <= size && num > 0;
     }
 
-    /*this checks if there are any 0's left in the matrix*/
+    /**
+     * This checks if there are any 0's left in the matrix.
+     * @return Returns if there are no 0's left in the matrix.
+     * */
     public boolean isSolved() {
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {

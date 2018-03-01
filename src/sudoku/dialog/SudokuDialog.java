@@ -102,6 +102,7 @@ public class SudokuDialog extends JFrame {
         if (newGame == JOptionPane.YES_NO_OPTION) {
             System.out.println("new Clicked");
             board = new Board(size);
+
             boardPanel.setBoard(board);
             boardPanel.repaint();
             showMessage("New Game Board: " + size);
