@@ -7,13 +7,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.net.URL;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import sudoku.model.Board;
 
@@ -104,11 +98,14 @@ public class SudokuDialog extends JFrame {
      * @param size Requested puzzle size, either 4 or 9.
      */
     private void newClicked(int size) {
-        System.out.println("new Clicked");
-        board = new Board(size);
-        boardPanel.setBoard(board);
-        boardPanel.repaint();
-        showMessage("New clicked: " + size);
+        int newGame = JOptionPane.showConfirmDialog(null, "Delete Progress", "New Game", JOptionPane.YES_NO_OPTION);
+        if (newGame == JOptionPane.YES_NO_OPTION) {
+            System.out.println("new Clicked");
+            board = new Board(size);
+            boardPanel.setBoard(board);
+            boardPanel.repaint();
+            showMessage("New Game Board: " + size);
+        }
     }
 
     /**
