@@ -145,6 +145,7 @@ public class SudokuDialog extends JFrame {
             button.addActionListener(e -> numberClicked(number));
     		numberButtons.add(button);
     	}
+    	
     	numberButtons.setAlignmentX(LEFT_ALIGNMENT);
 
     	JPanel content = new JPanel();
