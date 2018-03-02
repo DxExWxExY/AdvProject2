@@ -36,13 +36,11 @@ public class BoardPanel extends JPanel {
     /**
      * Random values for a color generation.
      * */
-    private static Random rand = new Random();
-
 
     /**
      * Background color of the board.
      */
-    private static  Color boardColor = new Color(rand.nextInt(240) + 1, rand.nextInt(240) + 1, rand.nextInt(250) + 1);
+    private static  Color boardColor = new Color(70, 70, 70);
 
     /**
      * Board to be displayed.
@@ -163,7 +161,7 @@ public class BoardPanel extends JPanel {
         for (int i = 0; i < board.size(); i++) {
             for (int j = 0; j < board.size(); j++) {
                 if (board.getElement(i, j) != 0) {
-                    g.setColor(Color.BLACK);
+                    g.setColor(Color.white);
                     g.drawString(String.valueOf(board.getElement(i,j)), (j*squareSize)+(squareSize/2-3), (i*squareSize)+(squareSize/2+4));
                 }
             }
@@ -179,7 +177,7 @@ public class BoardPanel extends JPanel {
     private void actions(Graphics g) {
 //        System.out.println("actions");
         if (highlightSqr) {
-            g.setColor(Color.PINK);
+            g.setColor(Color.cyan);
             g.fillRect(sx*squareSize, sy*squareSize, squareSize, squareSize);
             highlightSqr = false;
         }
