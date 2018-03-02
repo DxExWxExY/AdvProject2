@@ -35,7 +35,10 @@ public class Board {
             valid[row][col] = true;
             return true;
         }
-        return false;
+        else {
+//            valid[row][col] = false;
+            return false;
+        }
     }
 
     /**
@@ -75,9 +78,6 @@ public class Board {
      * @return Returns if the number follows the rule.
      * */
     private boolean checkHorizontal(int row, int num) {
-        if (num == 0) {
-            return true;
-        }
         for (int i = 0; i < size; i++) {
             if (board[row][i] == num) {
                 return false;
@@ -93,9 +93,6 @@ public class Board {
      * @return Returns if the number follows the rule.
      * */
     private boolean checkVertical(int col, int num) {
-        if (num == 0) {
-            return true;
-        }
         for (int i = 0; i < size; i++) {
             if (board[i][col] == num) {
                 return false;
@@ -112,9 +109,6 @@ public class Board {
      * @return Returns if the number follows the rule.
      * */
     private boolean checkSubGrid(int row, int col, int num) {
-        if (num == 0) { // if the element to replace is 0
-            return true;
-        }
         /*the starting position is determined by modding the
          * row/col num by the sqrt of the size*/
         int rowS = (int) Math.sqrt(size) * (int) Math.floor(Math.abs(row/Math.sqrt(size)));
@@ -157,11 +151,19 @@ public class Board {
     public boolean isSolved() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (ruleChecker(i,j,board[i][j])) {
+                if (!valid[i][j]) {
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    /**
+     * This method rests the values in the matrix back to 0;
+     * */
+    public void reset() {
+        board = new int[size][size];
+        valid = new boolean[size][size];
     }
 }

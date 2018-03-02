@@ -7,9 +7,12 @@ import java.awt.image.ImageObserver;
 import java.text.AttributedCharacterIterator;
 import java.util.Random;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import sudoku.model.Board;
+
+import static javax.swing.JOptionPane.NO_OPTION;
+import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
 
 /**
  * A special panel class to display a Sudoku board modeled by the
@@ -106,7 +109,6 @@ public class BoardPanel extends JPanel {
         squareSize = Math.min(dim.width, dim.height) / board.size();
 
         // draw background
-        final Color oldColor = g.getColor();
         g.setColor(boardColor);
         g.fillRect(0, 0, squareSize * board.size(), squareSize * board.size());
 
@@ -115,6 +117,25 @@ public class BoardPanel extends JPanel {
         drawNumbers(g);
         insideLines(g);
         outsideBox(g);
+        solved();
+    }
+
+    private void solved() {
+        if (board.isSolved()) {
+            Object[] options = {"Yes", "Continue", "Exit"};
+            int solved = JOptionPane.showOptionDialog(null,"Start New Game?",
+                    "You Won!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                    null, options, options[2]);
+            if (solved == JOptionPane.YES_OPTION) {
+                board.reset();
+            }
+            else if (solved == NO_OPTION) {
+                repaint();
+            }
+            else {
+                System.exit(0);
+            }
+        }
     }
 
     /**
