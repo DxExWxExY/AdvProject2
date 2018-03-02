@@ -1,5 +1,6 @@
 package sudoku.dialog;
 
+import java.applet.AudioClip;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -8,8 +9,13 @@ import java.awt.Insets;
 import java.net.URL;
 import java.util.Objects;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 import javax.swing.*;
-
+import  sun.audio.*;    //import the sun.audio package
+import  java.io.*;
 import sudoku.model.Board;
 
 /**
@@ -39,7 +45,13 @@ public class SudokuDialog extends JFrame {
     private SudokuDialog() {
     	this(DEFAULT_SIZE);
     }
-    
+
+    private AudioInputStream clipNameAIS;
+
+    private Clip clipNameClip;
+
+    AudioClip sound;
+
     /** Create a new dialog of the given screen dimension. */
     private SudokuDialog(Dimension dim) {
         super("Sudoku");
@@ -86,7 +98,9 @@ public class SudokuDialog extends JFrame {
         }
         boardPanel.repaint();
     }
-    
+
+
+
     /**
      * Callback to be invoked when a new button is clicked.
      * If the current game is over, start a new game of the given size;
@@ -94,15 +108,32 @@ public class SudokuDialog extends JFrame {
      * accordingly.
      * @param size Requested puzzle size, either 4 or 9.
      */
-    private void newClicked(int size) {
-//        System.out.println("new Clicked");
+
+
+
+    private void newClicked(int size)  {
+        try {
+
+            Clip clip = AudioSystem.getClip();
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("//home/lacutie/Documents/Projects/AdvProject2/src/sudoku/dialog/button-3.wav").getAbsoluteFile());
+            DataLine.Info info = new DataLine.Info(Clip.class, audioInputStream.getFormat());
+            clip = (Clip)AudioSystem.getLine(info);
+            clip.open(audioInputStream);
+             clip.start();
+        } catch(Exception ex) {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+        }
+
         int newGame = JOptionPane.showConfirmDialog(null, "Delete Progress", "New Game", JOptionPane.YES_NO_OPTION);
         if (newGame == JOptionPane.YES_NO_OPTION) {
             board = new Board(size);
             boardPanel.setBoard(board);
             boardPanel.repaint();
             showMessage("New Game Board: " + size);
+
         }
+
     }
 
     /**
@@ -138,7 +169,8 @@ public class SudokuDialog extends JFrame {
         JButton new4Button = new JButton("New (4x4)");
         for (JButton button: new JButton[] { new4Button, new JButton("New (9x9)") }) {
         	button.setFocusPainted(false);
-            button.addActionListener(e -> newClicked(e.getSource() == new4Button ? 4 : 9));
+            button.addActionListener(e ->
+                    newClicked(e.getSource() == new4Button ? 4 : 9));
             newButtons.add(button);
     	}
     	newButtons.setAlignmentX(LEFT_ALIGNMENT);

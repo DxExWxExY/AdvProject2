@@ -4,9 +4,14 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.ImageObserver;
+import java.io.File;
 import java.text.AttributedCharacterIterator;
 import java.util.Random;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 import javax.swing.*;
 
 import sudoku.model.Board;
@@ -54,6 +59,7 @@ public class BoardPanel extends JPanel {
     public int sx;
     public int sy;
     public boolean highlightSqr;
+    public boolean sounds;
 
     /**
      * Create a new board panel to display the given board.
@@ -113,8 +119,8 @@ public class BoardPanel extends JPanel {
         g.fillRect(0, 0, squareSize * board.size(), squareSize * board.size());
 
         // WRITE YOUR CODE HERE ...
-        actions(g);
         drawNumbers(g);
+        actions(g);
         insideLines(g);
         outsideBox(g);
         solved();
@@ -172,22 +178,42 @@ public class BoardPanel extends JPanel {
      * @param g method receives the Graphics class in order to draw the numbers
      * */
     private void drawNumbers(Graphics g) {
-        for (int i = 0; i < board.size(); i++) {
-            for (int j = 0; j < board.size(); j++) {
-                if (board.getElement(i, j) != 0) {
-                    if (board.isValid(i, j)) {
-                        g.setColor(Color.WHITE);
-                        g.drawString(String.valueOf(board.getElement(i,j)), (j*squareSize)+(squareSize/2-3), (i*squareSize)+(squareSize/2+4));
-                    }
-                    else if (!board.isValid(i,j)) {
-                        g.setColor(Color.CYAN);
-                        g.fillRect(j*squareSize, i*squareSize, squareSize, squareSize);
-                        g.setColor(Color.BLACK);
-                        g.drawString(String.valueOf(board.getElement(i,j)), (j*squareSize)+(squareSize/2-3), (i*squareSize)+(squareSize/2+4));
+
+        try {
+            Clip clip = AudioSystem.getClip();
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("//home/lacutie/Documents/Projects/AdvProject2/src/sudoku/dialog/button-3.wav").getAbsoluteFile());
+            for (int i = 0; i < board.size(); i++) {
+                for (int j = 0; j < board.size(); j++) {
+                    if (board.getElement(i, j) != 0) {
+                        if (board.isValid(i, j)) {
+                            g.setColor(Color.WHITE);
+                            g.drawString(String.valueOf(board.getElement(i, j)), (j * squareSize) + (squareSize / 2 - 3), (i * squareSize) + (squareSize / 2 + 4));
+                        } else if (!board.isValid(i, j)) {
+
+                            g.setColor(Color.CYAN);
+                            g.fillRect(j*squareSize, i*squareSize, squareSize, squareSize);
+                            g.setColor(Color.BLACK);
+                            g.drawString(String.valueOf(board.getElement(i,j)), (j*squareSize)+(squareSize/2-3), (i*squareSize)+(squareSize/2+4));
+                            sounds = true;
+                        }
                     }
                 }
             }
+            if(sounds){
+                DataLine.Info info = new DataLine.Info(Clip.class, audioInputStream.getFormat());
+                clip = (Clip) AudioSystem.getLine(info);
+                clip.open(audioInputStream);
+                clip.start();
+            }
+
+        } catch(Exception ex) {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
         }
+
+
+
+
     }
 
     /**
@@ -202,6 +228,8 @@ public class BoardPanel extends JPanel {
             g.setColor(Color.WHITE);
             g.fillRect(sx*squareSize, sy*squareSize, squareSize, squareSize);
             highlightSqr = false;
+            sounds = false;
+
         }
     }
 }
