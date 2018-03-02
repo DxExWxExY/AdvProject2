@@ -76,10 +76,12 @@ public class SudokuDialog extends JFrame {
 //        System.out.println("numberClicked");
         if (number == 0) {
             board.deleteElement(boardPanel.sy, boardPanel.sx);
+            boardPanel.setBoard(board);
             showMessage("Number Deleted");
         }
         else {
             if (board.insertElement(boardPanel.sy, boardPanel.sx, number)) {
+                boardPanel.setBoard(board);
                 showMessage("Number Inserted");
             }
             else {

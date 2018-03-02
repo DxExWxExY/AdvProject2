@@ -104,7 +104,7 @@ public class BoardPanel extends JPanel {
      */
     @Override
     public void paint(Graphics g) {
-        System.out.println("paint");
+//        System.out.println("paint");
         super.paint(g);
 
         // determine the square size
@@ -147,7 +147,7 @@ public class BoardPanel extends JPanel {
      * @param g method receives the Graphics class in order to draw the lines
      * */
     private void insideLines(Graphics g) {
-        System.out.println("insideLines");
+//        System.out.println("insideLines");
         g.setColor(Color.gray);
         for (int i = 0; i < 276; i = i + squareSize) {
             g.drawLine(i, 0, i, squareSize * board.size());

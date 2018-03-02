@@ -113,13 +113,13 @@ public class Board {
         }
         /*the starting position is determined by modding the
          * row/col num by the sqrt of the size*/
-        int rowStart = (int) Math.sqrt(size) * (int) Math.floor(Math.abs(row/Math.sqrt(size)));
-        int colStart = (int) Math.sqrt(size) * (int) Math.floor(Math.abs(col/Math.sqrt(size)));
-        int rowEnd = (int) (rowStart + (Math.sqrt(size)));
-        int colEnd = (int) (colStart + (Math.sqrt(size)));
-        for (; rowStart < rowEnd; rowStart++) {
-            for (; colStart < colEnd; colStart++) {
-                if (board[rowStart][colStart] == num) {
+        int rowS = (int) Math.sqrt(size) * (int) Math.floor(Math.abs(row/Math.sqrt(size)));
+        int colS = (int) Math.sqrt(size) * (int) Math.floor(Math.abs(col/Math.sqrt(size)));
+        int rowE = (int) (rowS + (Math.sqrt(size)));
+        int colE = (int) (colS + (Math.sqrt(size)));
+        for (int i = rowS; i < rowE; i++) {
+            for (int j = colS; j < colE; j++) {
+                if (board[i][j] == num) {
                     return false; //if a matching number is found
                 }
             }
