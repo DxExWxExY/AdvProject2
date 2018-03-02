@@ -34,15 +34,15 @@ public class BoardPanel extends JPanel {
     }
 
     /**
-
-     */
-    static Random rand = new Random();
+     * Random values for a color generation.
+     * */
+    private static Random rand = new Random();
 
 
     /**
      * Background color of the board.
      */
-    private static  Color boardColor = new Color(70, 70, 70);
+    private static  Color boardColor = new Color(rand.nextInt(240) + 1, rand.nextInt(240) + 1, rand.nextInt(250) + 1);
 
     /**
      * Board to be displayed.
@@ -52,7 +52,7 @@ public class BoardPanel extends JPanel {
     /**
      * Width and height of a square in pixels.
      */
-    public int squareSize;
+    private int squareSize;
     public int sx;
     public int sy;
     public boolean highlightSqr;
@@ -61,8 +61,8 @@ public class BoardPanel extends JPanel {
     /**
      * Create a new board panel to display the given board.
      */
-    public BoardPanel(Board board, ClickListener listener) {
-//        System.out.println("BoardPanel");
+    BoardPanel(Board board, ClickListener listener) {
+        System.out.println("BoardPanel");
         this.board = board;
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
@@ -78,7 +78,7 @@ public class BoardPanel extends JPanel {
      * Set the board to be displayed.
      */
     public void setBoard(Board board) {
-//        System.out.println("setBOard");
+//        System.out.println("setBoard");
         this.board = board;
     }
 
@@ -104,7 +104,7 @@ public class BoardPanel extends JPanel {
      */
     @Override
     public void paint(Graphics g) {
-//        System.out.println("paint");
+        System.out.println("paint");
         super.paint(g);
 
         // determine the square size
@@ -122,7 +122,6 @@ public class BoardPanel extends JPanel {
         insideLines(g);
         outsideBox(g);
     }
-
 
     /**
      * This method draw the outside lines to define the subgrid of the board
@@ -148,7 +147,7 @@ public class BoardPanel extends JPanel {
      * @param g method receives the Graphics class in order to draw the lines
      * */
     private void insideLines(Graphics g) {
-//        System.out.println("insideLines");
+        System.out.println("insideLines");
         g.setColor(Color.gray);
         for (int i = 0; i < 276; i = i + squareSize) {
             g.drawLine(i, 0, i, squareSize * board.size());
@@ -164,8 +163,8 @@ public class BoardPanel extends JPanel {
         for (int i = 0; i < board.size(); i++) {
             for (int j = 0; j < board.size(); j++) {
                 if (board.getElement(i, j) != 0) {
-                    g.setColor(Color.white);
-                    g.drawString(String.valueOf(board.getElement(i,j)), (i*squareSize)+(squareSize/2-3), (j*squareSize)+(squareSize/2+4));
+                    g.setColor(Color.BLACK);
+                    g.drawString(String.valueOf(board.getElement(i,j)), (j*squareSize)+(squareSize/2-3), (i*squareSize)+(squareSize/2+4));
                 }
             }
         }
@@ -173,20 +172,20 @@ public class BoardPanel extends JPanel {
 
     /**
     * This method paint the pixels of the square selected in the board
-    * and in case of invalid or repeated numbers in the same subgrid, column, or row then
+    * and in case of invalid or repeated numbers in the same sub-grid, column, or row then
     * would display red square in all the positions
     * @param g method receives the Graphics class in order to draw the actions
     * */
-        private void actions(Graphics g) {
+    private void actions(Graphics g) {
 //        System.out.println("actions");
         if (highlightSqr) {
-            g.setColor(Color.cyan);
-            g.fillRect(sx, sy, squareSize, squareSize);
+            g.setColor(Color.PINK);
+            g.fillRect(sx*squareSize, sy*squareSize, squareSize, squareSize);
             highlightSqr = false;
         }
         if (notAllowed) {
             g.setColor(Color.RED);
-            g.fillRect(sx, sy, squareSize, squareSize);
+            g.fillRect(sx*squareSize, sy*squareSize, squareSize, squareSize);
             notAllowed = false;
         }
     }

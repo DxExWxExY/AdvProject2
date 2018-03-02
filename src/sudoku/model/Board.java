@@ -113,13 +113,12 @@ public class Board {
         }
         /*the starting position is determined by modding the
          * row/col num by the sqrt of the size*/
-        int rowStart = (int) (row - (row % Math.sqrt(size)));
-        int colStart = (int) (col - (col % Math.sqrt(size)));
+        int rowStart = (int) Math.sqrt(size) * (int) Math.floor(Math.abs(row/Math.sqrt(size)));
+        int colStart = (int) Math.sqrt(size) * (int) Math.floor(Math.abs(col/Math.sqrt(size)));
         int rowEnd = (int) (rowStart + (Math.sqrt(size)));
         int colEnd = (int) (colStart + (Math.sqrt(size)));
-        System.out.printf("\nSubGrid Values =============\nR: %d C: %d RS: %d CS: %d RE: %d CE: %d NUM: %d\n", row, col ,rowStart, colStart, rowEnd, colEnd, num);
-        for (; rowStart <= rowEnd; rowStart++) {
-            for (; colStart <= colEnd; colStart++) {
+        for (; rowStart < rowEnd; rowStart++) {
+            for (; colStart < colEnd; colStart++) {
                 if (board[rowStart][colStart] == num) {
                     return false; //if a matching number is found
                 }
