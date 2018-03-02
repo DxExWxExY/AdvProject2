@@ -27,7 +27,7 @@ public class Board {
      * @param num This is the number to be inserted into the matrix.
      * @return Returns whether the insertion was allowed or not.
      * */
-    public boolean insertElement(int row, int col, int num) {
+    private boolean ruleChecker(int row, int col, int num) {
         if (checkHorizontal(row, num) && checkVertical(col, num)
                 && checkSubGrid(row, col, num) && checkRange(num)) {
             setElement(row, col, num);
@@ -60,7 +60,7 @@ public class Board {
      * @param col This is the column at which the number is inserted.
      * @param num This is the number inserted into the matrix.
      * */
-    private void setElement(int row, int col, int num) {
+    public void setElement(int row, int col, int num) {
         board[row][col] = num;
     }
 
@@ -141,9 +141,9 @@ public class Board {
      * @return Returns if there are no 0's left in the matrix.
      * */
     public boolean isSolved() {
-        for (int y = 0; y < size; y++) {
-            for (int x = 0; x < size; x++) {
-                if (board[y][x] == 0) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (ruleChecker(i,j,board[i][j])) {
                     return false;
                 }
             }

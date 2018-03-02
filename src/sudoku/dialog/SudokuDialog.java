@@ -29,7 +29,7 @@ public class SudokuDialog extends JFrame {
     /** Sudoku board. */
     private Board board;
 
-    /** Special panel to display a Sudoku board. */
+    /* Special panel to display a Sudoku board. */
     private BoardPanel boardPanel;
 
     /** Message bar to display various messages. */
@@ -80,14 +80,9 @@ public class SudokuDialog extends JFrame {
             showMessage("Number Deleted");
         }
         else {
-            if (board.insertElement(boardPanel.sy, boardPanel.sx, number)) {
-                boardPanel.setBoard(board);
-                showMessage("Number Inserted");
-            }
-            else {
-                boardPanel.notAllowed = true;
-                showMessage("Insertion Not Allowed");
-            }
+            board.setElement(boardPanel.sy, boardPanel.sx, number);
+            boardPanel.setBoard(board);
+            showMessage(String.format("Inserted Number %d", number));
         }
         boardPanel.repaint();
     }
@@ -121,7 +116,7 @@ public class SudokuDialog extends JFrame {
     /** Configure the UI. */
     private void configureUI() {
 //        System.out.println("configureUI");
-        setIconImage(Objects.requireNonNull(createImageIcon("sudoku.png")).getImage());
+        setIconImage(Objects.requireNonNull(createImageIcon()).getImage());
         setLayout(new BorderLayout());
         JPanel buttons = makeControlPanel();
         // boarder: top, left, bottom, right
@@ -167,9 +162,9 @@ public class SudokuDialog extends JFrame {
     }
 
     /** Create an image icon from the given image file. */
-    private ImageIcon createImageIcon(String filename) {
+    private ImageIcon createImageIcon() {
 //        System.out.println("createImageIcon");
-        URL imageUrl = getClass().getResource(IMAGE_DIR + filename);
+        URL imageUrl = getClass().getResource(IMAGE_DIR + "sudoku.png");
         if (imageUrl != null) {
             return new ImageIcon(imageUrl);
         }
