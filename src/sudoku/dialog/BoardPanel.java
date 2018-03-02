@@ -34,13 +34,10 @@ public class BoardPanel extends JPanel {
     }
 
     /**
-     * Random values for a color generation.
-     * */
-
-    /**
      * Background color of the board.
      */
-    private static  Color boardColor = new Color(70, 70, 70);
+    private static Color boardColor = new Color(70, 70, 70);
+    private static Color invalidNum = new Color(228, 0, 124);
 
     /**
      * Board to be displayed.
@@ -54,13 +51,12 @@ public class BoardPanel extends JPanel {
     public int sx;
     public int sy;
     public boolean highlightSqr;
-    public boolean notAllowed;
 
     /**
      * Create a new board panel to display the given board.
      */
     BoardPanel(Board board, ClickListener listener) {
-        System.out.println("BoardPanel");
+//        System.out.println("BoardPanel");
         this.board = board;
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
@@ -122,7 +118,7 @@ public class BoardPanel extends JPanel {
     }
 
     /**
-     * This method draw the outside lines to define the subgrid of the board
+     * This method draw the outside lines to define the sub-grid of the board
      * @param g method receives the Graphics class in order to draw the lines
      * */
     private void outsideBox(Graphics g) {
@@ -154,15 +150,23 @@ public class BoardPanel extends JPanel {
         }
     }
     /**
-     * This method draw the numbers stored in the matrix in their corresponding index
+     * This method draw the numbers stored in the matrix and highlights the invalid entries.
      * @param g method receives the Graphics class in order to draw the numbers
      * */
     private void drawNumbers(Graphics g) {
         for (int i = 0; i < board.size(); i++) {
             for (int j = 0; j < board.size(); j++) {
                 if (board.getElement(i, j) != 0) {
-                    g.setColor(Color.white);
-                    g.drawString(String.valueOf(board.getElement(i,j)), (j*squareSize)+(squareSize/2-3), (i*squareSize)+(squareSize/2+4));
+                    if (board.isValid(i, j)) {
+                        g.setColor(Color.WHITE);
+                        g.drawString(String.valueOf(board.getElement(i,j)), (j*squareSize)+(squareSize/2-3), (i*squareSize)+(squareSize/2+4));
+                    }
+                    else if (!board.isValid(i,j)) {
+                        g.setColor(Color.CYAN);
+                        g.fillRect(j*squareSize, i*squareSize, squareSize, squareSize);
+                        g.setColor(Color.BLACK);
+                        g.drawString(String.valueOf(board.getElement(i,j)), (j*squareSize)+(squareSize/2-3), (i*squareSize)+(squareSize/2+4));
+                    }
                 }
             }
         }
@@ -177,14 +181,9 @@ public class BoardPanel extends JPanel {
     private void actions(Graphics g) {
 //        System.out.println("actions");
         if (highlightSqr) {
-            g.setColor(Color.cyan);
+            g.setColor(Color.WHITE);
             g.fillRect(sx*squareSize, sy*squareSize, squareSize, squareSize);
             highlightSqr = false;
-        }
-        if (notAllowed) {
-            g.setColor(Color.RED);
-            g.fillRect(sx*squareSize, sy*squareSize, squareSize, squareSize);
-            notAllowed = false;
         }
     }
 }

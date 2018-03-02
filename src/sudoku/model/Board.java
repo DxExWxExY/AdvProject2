@@ -7,11 +7,13 @@ public class Board {
     /** Size of this board (number of columns/rows). */
     private final int size;
     private int[][] board;
+    private boolean[][] valid;
 
     /** Create a new board of the given size. */
     public Board(int size) {
         this.size = size;
         this.board = new int[size][size];
+        this.valid = new boolean[size][size];
     }
 
     /** Return the size of this board. */
@@ -22,15 +24,15 @@ public class Board {
      * This method receives a coordinate in the matrix and checks if it is allowed.
      * To check if the insertion is allowed, it relies on checkVertical, checkHorizontal,
      * checkRange, and checkSubGrid.
-     * @param row This is the row at which the number would be inserted.
-     * @param col This is the column at which the number would be inserted.
-     * @param num This is the number to be inserted into the matrix.
+     * @param row This is the row to be checked.
+     * @param col This is the column to be checked.
+     * @param num This is the number to be compared against the matrix.
      * @return Returns whether the insertion was allowed or not.
      * */
     private boolean ruleChecker(int row, int col, int num) {
         if (checkHorizontal(row, num) && checkVertical(col, num)
                 && checkSubGrid(row, col, num) && checkRange(num)) {
-            setElement(row, col, num);
+            valid[row][col] = true;
             return true;
         }
         return false;
@@ -55,12 +57,14 @@ public class Board {
     }
 
     /**
-     * This stores num into the position row col.
+     * This stores num into the position row col and determines if the insertion is valid.
      * @param row This is the row at which the number is inserted.
      * @param col This is the column at which the number is inserted.
      * @param num This is the number inserted into the matrix.
      * */
     public void setElement(int row, int col, int num) {
+        valid[row][col] = (checkHorizontal(row, num) && checkVertical(col, num)
+                && checkSubGrid(row, col, num) && checkRange(num));
         board[row][col] = num;
     }
 
@@ -134,6 +138,16 @@ public class Board {
      * */
     private boolean checkRange(int num) {
         return num <= size && num > 0;
+    }
+
+    /**
+     * This returns whether the value was a valid insertion.
+     * @param row This is the row to be checked.
+     * @param col This is the col to be checked.
+     * @return Returns the value stored at the index.
+     * */
+    public boolean isValid(int row, int col) {
+        return valid[row][col];
     }
 
     /**
