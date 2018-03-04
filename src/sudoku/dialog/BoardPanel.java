@@ -182,12 +182,20 @@ public class BoardPanel extends JPanel {
         try {
             Clip clip = AudioSystem.getClip();
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("//home/lacutie/Documents/Projects/AdvProject2/src/sudoku/dialog/button-3.wav").getAbsoluteFile());
+            if(sounds){
+                DataLine.Info info = new DataLine.Info(Clip.class, audioInputStream.getFormat());
+                clip = (Clip) AudioSystem.getLine(info);
+                clip.open(audioInputStream);
+                clip.start();
+                sounds=false;
+            }
             for (int i = 0; i < board.size(); i++) {
                 for (int j = 0; j < board.size(); j++) {
                     if (board.getElement(i, j) != 0) {
                         if (board.isValid(i, j)) {
                             g.setColor(Color.WHITE);
                             g.drawString(String.valueOf(board.getElement(i, j)), (j * squareSize) + (squareSize / 2 - 3), (i * squareSize) + (squareSize / 2 + 4));
+                            sounds = false;
                         } else if (!board.isValid(i, j)) {
 
                             g.setColor(Color.CYAN);
@@ -198,12 +206,6 @@ public class BoardPanel extends JPanel {
                         }
                     }
                 }
-            }
-            if(sounds){
-                DataLine.Info info = new DataLine.Info(Clip.class, audioInputStream.getFormat());
-                clip = (Clip) AudioSystem.getLine(info);
-                clip.open(audioInputStream);
-                clip.start();
             }
 
         } catch(Exception ex) {
