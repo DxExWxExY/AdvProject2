@@ -198,7 +198,7 @@ public class BoardPanel extends JPanel {
                             sounds = false;
                         } else if (!board.isValid(i, j)) {
 
-                            g.setColor(Color.CYAN);
+                            g.setColor(Color.white);
                             g.fillRect(j*squareSize, i*squareSize, squareSize, squareSize);
                             g.setColor(Color.BLACK);
                             g.drawString(String.valueOf(board.getElement(i,j)), (j*squareSize)+(squareSize/2-3), (i*squareSize)+(squareSize/2+4));
@@ -227,7 +227,7 @@ public class BoardPanel extends JPanel {
     private void actions(Graphics g) {
 //        System.out.println("actions");
         if (highlightSqr) {
-            g.setColor(Color.WHITE);
+            g.setColor(Color.cyan);
             g.fillRect(sx*squareSize, sy*squareSize, squareSize, squareSize);
             highlightSqr = false;
             sounds = false;
