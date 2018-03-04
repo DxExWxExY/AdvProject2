@@ -180,8 +180,8 @@ public class BoardPanel extends JPanel {
     private void drawNumbers(Graphics g) {
 
         try {
-            Clip clip = AudioSystem.getClip();
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("//home/lacutie/Documents/Projects/AdvProject2/src/sudoku/dialog/button-3.wav").getAbsoluteFile());
+            Clip clip;
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sound/button-3.wav").getAbsoluteFile());
             if(sounds){
                 DataLine.Info info = new DataLine.Info(Clip.class, audioInputStream.getFormat());
                 clip = (Clip) AudioSystem.getLine(info);
