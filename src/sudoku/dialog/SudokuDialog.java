@@ -88,7 +88,7 @@ public class SudokuDialog extends JFrame {
         else {
             board.setElement(boardPanel.sy, boardPanel.sx, number);
             boardPanel.setBoard(board);
-            boardPanel.sounds = !board.isValid(boardPanel.sy, boardPanel.sx);
+            boardPanel.sound = !board.isValid(boardPanel.sy, boardPanel.sx);
             showMessage(String.format("Inserted Number %d", number));
         }
         boardPanel.repaint();
@@ -107,7 +107,7 @@ public class SudokuDialog extends JFrame {
             board = new Board(size);
             boardPanel.setBoard(board);
             boardPanel.repaint();
-            boardPanel.sounds = true;
+            boardPanel.sound = true;
             showMessage("New Game Board: " + size);
         }
     }

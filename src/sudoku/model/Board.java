@@ -33,7 +33,7 @@ public class Board {
         System.out.printf("\nH: %b V: %b S: %b R: %b", checkHorizontal(row, num) , checkVertical(col, num)
                 , checkSubGrid(row, col, num) , checkRange(num));
         if (checkHorizontal(row, num) && checkVertical(col, num)
-                && checkSubGrid(row, col, num)) {
+                && checkSubGrid(row, col, num) && checkRange(num)) {
             valid[row][col] = true;
             return true;
         }
@@ -69,7 +69,7 @@ public class Board {
      * */
     public void setElement(int row, int col, int num) {
         valid[row][col] = (checkHorizontal(row, num) && checkVertical(col, num)
-                && checkSubGrid(row, col, num));
+                && checkSubGrid(row, col, num) && checkRange(num));
         board[row][col] = num;
     }
 
