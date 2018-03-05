@@ -119,11 +119,42 @@ public class BoardPanel extends JPanel {
         g.fillRect(0, 0, squareSize * board.size(), squareSize * board.size());
 
         // WRITE YOUR CODE HERE ...
+        highlightInvalid(g);
         drawNumbers(g);
-        actions(g);
+        highlightSelected(g);
         insideLines(g);
         outsideBox(g);
         solved();
+    }
+
+    private void drawNumbers(Graphics g) {
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board.size(); j++) {
+                if (board.getElement(i, j) != 0) {
+                    if (board.isValid(i, j)) {
+                        g.setColor(Color.WHITE);
+                        g.drawString(String.valueOf(board.getElement(i, j)), (j * squareSize) + (squareSize / 2 - 3), (i * squareSize) + (squareSize / 2 + 4));
+                        sounds = false;
+                    }
+                    else if (!board.isValid(i, j)) {
+                        g.setColor(Color.BLACK);
+                        g.drawString(String.valueOf(board.getElement(i,j)), (j*squareSize)+(squareSize/2-3), (i*squareSize)+(squareSize/2+4));
+                        sounds = true;
+                    }
+                }
+            }
+        }
+    }
+
+    private void highlightInvalid(Graphics g) {
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board.size(); j++) {
+                if (!board.isValid(i,j) && board.getElement(i, j) != 0) {
+                    g.setColor(Color.WHITE);
+                    g.fillRect(j*squareSize, i*squareSize, squareSize, squareSize);
+                }
+            }
+        }
     }
 
     private void solved() {
@@ -177,8 +208,7 @@ public class BoardPanel extends JPanel {
      * This method draw the numbers stored in the matrix and highlights the invalid entries.
      * @param g method receives the Graphics class in order to draw the numbers
      * */
-    private void drawNumbers(Graphics g) {
-
+    private void playSound(Graphics g) {
         try {
             Clip clip;
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sound/button-3.wav").getAbsoluteFile());
@@ -189,33 +219,11 @@ public class BoardPanel extends JPanel {
                 clip.start();
                 sounds=false;
             }
-            for (int i = 0; i < board.size(); i++) {
-                for (int j = 0; j < board.size(); j++) {
-                    if (board.getElement(i, j) != 0) {
-                        if (board.isValid(i, j)) {
-                            g.setColor(Color.WHITE);
-                            g.drawString(String.valueOf(board.getElement(i, j)), (j * squareSize) + (squareSize / 2 - 3), (i * squareSize) + (squareSize / 2 + 4));
-                            sounds = false;
-                        } else if (!board.isValid(i, j)) {
-
-                            g.setColor(Color.white);
-                            g.fillRect(j*squareSize, i*squareSize, squareSize, squareSize);
-                            g.setColor(Color.BLACK);
-                            g.drawString(String.valueOf(board.getElement(i,j)), (j*squareSize)+(squareSize/2-3), (i*squareSize)+(squareSize/2+4));
-                            sounds = true;
-                        }
-                    }
-                }
-            }
-
-        } catch(Exception ex) {
+        }
+        catch(Exception ex) {
             System.out.println("Error with playing sound.");
             ex.printStackTrace();
         }
-
-
-
-
     }
 
     /**
@@ -224,7 +232,7 @@ public class BoardPanel extends JPanel {
     * would display red square in all the positions
     * @param g method receives the Graphics class in order to draw the actions
     * */
-    private void actions(Graphics g) {
+    private void highlightSelected(Graphics g) {
 //        System.out.println("actions");
         if (highlightSqr) {
             g.setColor(Color.cyan);
