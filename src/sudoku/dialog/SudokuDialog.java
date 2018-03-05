@@ -46,12 +46,6 @@ public class SudokuDialog extends JFrame {
     	this(DEFAULT_SIZE);
     }
 
-    private AudioInputStream clipNameAIS;
-
-    private Clip clipNameClip;
-
-    AudioClip sound;
-
     /** Create a new dialog of the given screen dimension. */
     private SudokuDialog(Dimension dim) {
         super("Sudoku");
@@ -94,12 +88,11 @@ public class SudokuDialog extends JFrame {
         else {
             board.setElement(boardPanel.sy, boardPanel.sx, number);
             boardPanel.setBoard(board);
+            boardPanel.sounds = !board.isValid(boardPanel.sy, boardPanel.sx);
             showMessage(String.format("Inserted Number %d", number));
         }
         boardPanel.repaint();
     }
-
-
 
     /**
      * Callback to be invoked when a new button is clicked.
@@ -108,32 +101,15 @@ public class SudokuDialog extends JFrame {
      * accordingly.
      * @param size Requested puzzle size, either 4 or 9.
      */
-
-
-
     private void newClicked(int size)  {
-        try {
-
-            Clip clip = AudioSystem.getClip();
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("//home/lacutie/Documents/Projects/AdvProject2/src/sudoku/dialog/button-3.wav").getAbsoluteFile());
-            DataLine.Info info = new DataLine.Info(Clip.class, audioInputStream.getFormat());
-            clip = (Clip)AudioSystem.getLine(info);
-            clip.open(audioInputStream);
-             clip.start();
-        } catch(Exception ex) {
-            System.out.println("Error with playing sound.");
-            ex.printStackTrace();
-        }
-
         int newGame = JOptionPane.showConfirmDialog(null, "Delete Progress", "New Game", JOptionPane.YES_NO_OPTION);
         if (newGame == JOptionPane.YES_NO_OPTION) {
             board = new Board(size);
             boardPanel.setBoard(board);
             boardPanel.repaint();
+            boardPanel.sounds = true;
             showMessage("New Game Board: " + size);
-
         }
-
     }
 
     /**

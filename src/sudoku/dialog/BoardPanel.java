@@ -34,7 +34,6 @@ public class BoardPanel extends JPanel {
 
         /**
          * Callback to notify clicking of a square.
-         *
          * @param x 0-based column index of the clicked square
          * @param y 0-based row index of the clicked square
          */
@@ -45,7 +44,6 @@ public class BoardPanel extends JPanel {
      * Background color of the board.
      */
     private static Color boardColor = new Color(70, 70, 70);
-    private static Color invalidNum = new Color(228, 0, 124);
 
     /**
      * Board to be displayed.
@@ -56,10 +54,8 @@ public class BoardPanel extends JPanel {
      * Width and height of a square in pixels.
      */
     private int squareSize;
-    public int sx;
-    public int sy;
-    public boolean highlightSqr;
-    public boolean sounds;
+    public int sx, sy;
+    public boolean highlightSqr, sounds;
 
     /**
      * Create a new board panel to display the given board.
@@ -119,6 +115,7 @@ public class BoardPanel extends JPanel {
         g.fillRect(0, 0, squareSize * board.size(), squareSize * board.size());
 
         // WRITE YOUR CODE HERE ...
+        playSound();
         highlightInvalid(g);
         drawNumbers(g);
         highlightSelected(g);
@@ -134,12 +131,10 @@ public class BoardPanel extends JPanel {
                     if (board.isValid(i, j)) {
                         g.setColor(Color.WHITE);
                         g.drawString(String.valueOf(board.getElement(i, j)), (j * squareSize) + (squareSize / 2 - 3), (i * squareSize) + (squareSize / 2 + 4));
-                        sounds = false;
                     }
                     else if (!board.isValid(i, j)) {
                         g.setColor(Color.BLACK);
                         g.drawString(String.valueOf(board.getElement(i,j)), (j*squareSize)+(squareSize/2-3), (i*squareSize)+(squareSize/2+4));
-                        sounds = true;
                     }
                 }
             }
@@ -206,12 +201,11 @@ public class BoardPanel extends JPanel {
     }
     /**
      * This method draw the numbers stored in the matrix and highlights the invalid entries.
-     * @param g method receives the Graphics class in order to draw the numbers
      * */
-    private void playSound(Graphics g) {
+    private void playSound() {
         try {
             Clip clip;
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sound/button-3.wav").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sound/error.wav").getAbsoluteFile());
             if(sounds){
                 DataLine.Info info = new DataLine.Info(Clip.class, audioInputStream.getFormat());
                 clip = (Clip) AudioSystem.getLine(info);

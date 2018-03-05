@@ -29,9 +29,11 @@ public class Board {
      * @param num This is the number to be compared against the matrix.
      * @return Returns whether the insertion was allowed or not.
      * */
-    private boolean ruleChecker(int row, int col, int num) {
+    public boolean ruleChecker(int row, int col, int num) {
+        System.out.printf("\nH: %b V: %b S: %b R: %b", checkHorizontal(row, num) , checkVertical(col, num)
+                , checkSubGrid(row, col, num) , checkRange(num));
         if (checkHorizontal(row, num) && checkVertical(col, num)
-                && checkSubGrid(row, col, num) && checkRange(num)) {
+                && checkSubGrid(row, col, num)) {
             valid[row][col] = true;
             return true;
         }
@@ -67,7 +69,7 @@ public class Board {
      * */
     public void setElement(int row, int col, int num) {
         valid[row][col] = (checkHorizontal(row, num) && checkVertical(col, num)
-                && checkSubGrid(row, col, num) && checkRange(num));
+                && checkSubGrid(row, col, num));
         board[row][col] = num;
     }
 
