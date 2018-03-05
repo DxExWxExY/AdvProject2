@@ -3,21 +3,12 @@ package sudoku.dialog;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.ImageObserver;
-import java.io.File;
-import java.text.AttributedCharacterIterator;
-import java.util.Random;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
+import java.io.InputStream;
 import javax.swing.*;
-
 import sudoku.model.Board;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
-import static javax.swing.JOptionPane.NO_OPTION;
-import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
 
 /**
  * A special panel class to display a Sudoku board modeled by the
@@ -224,27 +215,21 @@ public class BoardPanel extends JPanel {
     private void playSound() {
         try {
             if(invalid) {
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sound/error.wav").getAbsoluteFile());
-                DataLine.Info info = new DataLine.Info(Clip.class, audioInputStream.getFormat());
-                Clip clip = (Clip) AudioSystem.getLine(info);
-                clip.open(audioInputStream);
-                clip.start();
+                InputStream song1 = getClass().getResourceAsStream("/sound/error.wav");
+                AudioStream audioStream = new AudioStream(song1);
+                AudioPlayer.player.start(audioStream);
                 invalid = false;
             }
             else if(reset) {
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sound/new.wav").getAbsoluteFile());
-                DataLine.Info info = new DataLine.Info(Clip.class, audioInputStream.getFormat());
-                Clip clip = (Clip) AudioSystem.getLine(info);
-                clip.open(audioInputStream);
-                clip.start();
+                InputStream song1 = getClass().getResourceAsStream("/sound/new.wav");
+                AudioStream audioStream = new AudioStream(song1);
+                AudioPlayer.player.start(audioStream);
                 reset = false;
             }
             else if(win) {
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sound/win.wav").getAbsoluteFile());
-                DataLine.Info info = new DataLine.Info(Clip.class, audioInputStream.getFormat());
-                Clip clip = (Clip) AudioSystem.getLine(info);
-                clip.open(audioInputStream);
-                clip.start();
+                InputStream song1 = getClass().getResourceAsStream("/sound/win.wav");
+                AudioStream audioStream = new AudioStream(song1);
+                AudioPlayer.player.start(audioStream);
                 win = false;
             }
         }
