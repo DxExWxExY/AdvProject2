@@ -33,7 +33,6 @@ public class Board {
         return (checkHorizontal(row, num) && checkVertical(col, num)
                 && checkSubGrid(row, col, num) && checkRange(num));
     }
-
     /**
      * This deletes the element at position row col by setting it back to 0.
      * @param row This is the row at which the number would be inserted deleted.
@@ -41,6 +40,7 @@ public class Board {
      * */
     public void deleteElement(int row, int col) {
         board[row][col] = 0;
+        valid[row][col] = false;
     }
 
     /**
