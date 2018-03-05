@@ -55,7 +55,7 @@ public class BoardPanel extends JPanel {
      */
     private int squareSize;
     public int sx, sy;
-    public boolean highlightSqr, sound;
+    public boolean highlightSqr, invalid, reset, win;
 
     /**
      * Create a new board panel to display the given board.
@@ -167,6 +167,8 @@ public class BoardPanel extends JPanel {
      * */
     private void solved() {
         if (board.isSolved()) {
+            win = true;
+            playSound();
             Object[] options = {"New Game", "Exit"};
             int solved = JOptionPane.showOptionDialog(null,"You Won!",
                     "Congratulations", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
@@ -215,18 +217,33 @@ public class BoardPanel extends JPanel {
     }
 
     /**
-     * This method plays a sound if the variable sound is set to true.
+     * This method plays a sound depending on which variable was set to true..
      * */
     private void playSound() {
         try {
-            Clip clip;
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sound/error.wav").getAbsoluteFile());
-            if(sound){
+            if(invalid) {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sound/error.wav").getAbsoluteFile());
                 DataLine.Info info = new DataLine.Info(Clip.class, audioInputStream.getFormat());
-                clip = (Clip) AudioSystem.getLine(info);
+                Clip clip = (Clip) AudioSystem.getLine(info);
                 clip.open(audioInputStream);
                 clip.start();
-                sound = false;
+                invalid = false;
+            }
+            else if(reset) {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sound/new.wav").getAbsoluteFile());
+                DataLine.Info info = new DataLine.Info(Clip.class, audioInputStream.getFormat());
+                Clip clip = (Clip) AudioSystem.getLine(info);
+                clip.open(audioInputStream);
+                clip.start();
+                reset = false;
+            }
+            else if(win) {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/sound/win.wav").getAbsoluteFile());
+                DataLine.Info info = new DataLine.Info(Clip.class, audioInputStream.getFormat());
+                Clip clip = (Clip) AudioSystem.getLine(info);
+                clip.open(audioInputStream);
+                clip.start();
+                win = false;
             }
         }
         catch(Exception ex) {
@@ -245,8 +262,6 @@ public class BoardPanel extends JPanel {
             g.setColor(Color.cyan);
             g.fillRect(sx*squareSize, sy*squareSize, squareSize, squareSize);
             highlightSqr = false;
-            sound = false;
-
         }
     }
 }
