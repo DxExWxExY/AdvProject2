@@ -9,17 +9,20 @@ public class Board {
     private int[][] board;
     private boolean[][] valid;
 
-    /** Create a new board of the given size. */
+    /** Create a new board of the given size.
+     * @param size This will be the size of the board. */
     public Board(int size) {
         this.size = size;
         this.board = new int[size][size];
         this.valid = new boolean[size][size];
     }
 
-    /** Return the size of this board. */
+    /** Return the size of this board.
+     * @return Returns the size of the board*/
     public int size() {
     	return size;
     }
+
     /**
      * This method receives a coordinate in the matrix and checks if it is allowed.
      * To check if the insertion is allowed, it relies on checkVertical, checkHorizontal,
@@ -33,6 +36,7 @@ public class Board {
         return (checkHorizontal(row, num) && checkVertical(col, num)
                 && checkSubGrid(row, col, num) && checkRange(num));
     }
+
     /**
      * This deletes the element at position row col by setting it back to 0.
      * @param row This is the row at which the number would be inserted deleted.
@@ -47,6 +51,7 @@ public class Board {
      * This  method retrieves the element at position row col.
      * @param row This is the row in the matrix.
      * @param col This is the column in the matrix.
+     * @return Returns the element at the index.
      * */
     public int getElement(int row, int col) {
         return board[row][col];

@@ -75,6 +75,8 @@ public class BoardPanel extends JPanel {
 
     /**
      * Set the board to be displayed.
+     * @param board Receives an object of type Board.
+     * @see Board
      */
     public void setBoard(Board board) {
 //        System.out.println("setBoard");
